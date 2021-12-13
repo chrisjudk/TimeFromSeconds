@@ -6,5 +6,6 @@
 [![GitHub issues](https://img.shields.io/github/issues/chrisjudk/TimeFromSeconds.svg)](/../../issues)
 [![GitHub closed issues](https://img.shields.io/github/issues-closed/chrisjudk/TimeFromSeconds.svg?colorB=red)](/../../issues?q=is%3Aissue+is%3Aclosed)
 [![GitHub commit activity the past week, 4 weeks, year](https://img.shields.io/github/commit-activity/y/chrisjudk/TimeFromSeconds.svg)](/../../graphs/commit-activity)
-##About This Project
+
+## About This Project
 Extension of [this](https://github.com/chrisjudk/TimeFromSeconds-CLI) repo
