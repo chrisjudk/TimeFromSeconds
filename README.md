@@ -1,2 +1,2 @@
 # TimeFromSeconds
-Extension of {this}[chrisjudk/TimeFromSeconds-CLI] repo
+Extension of [this](chrisjudk/TimeFromSeconds-CLI) repo
