@@ -1,0 +1,20 @@
+﻿<Page
+    x:Class="TimeFromSeconds.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TimeFromSeconds"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <TextBox x:Name="InputBox" HorizontalAlignment="Center" Margin="0,200,0,0" Text="Input" TextWrapping="Wrap" VerticalAlignment="Top" Height="40" Width="450" Background="{x:Null}" SelectionHighlightColor="{ThemeResource SystemControlHighlightAccentBrush}" InputScope="Number" PlaceholderText="Input time" TextAlignment="Center" TextChanged="InputBox_TextChanged" BorderBrush="{ThemeResource TextBoxBorderThemeBrush}"/>
+        <Button x:Name="Seconds" Content="Seconds" Height="48" Margin="0,350,454,0" VerticalAlignment="Top" Width="107" HorizontalAlignment="Center" Click="Seconds_Click"/>
+        <Button x:Name="Minutes" Content="Minutes" Height="48" Margin="150,350,0,0" VerticalAlignment="Top" Width="107" HorizontalAlignment="Center" Click="Minutes_Click"/>
+        <Button x:Name="Hours" Content="Hours" Height="48" Margin="0,350,150,0" VerticalAlignment="Top" Width="107" HorizontalAlignment="Center" Click="Hours_Click"/>
+        <Button x:Name="Days" Content="Days" Height="48" Margin="450,350,0,0" VerticalAlignment="Top" Width="107" Click="Days_Click" HorizontalAlignment="Center"/>
+        <TextBox x:Name="OutputBox" HorizontalAlignment="Center" Margin="0,500,0,0" Text="0" TextWrapping="Wrap" VerticalAlignment="Top" Height="80" Width="850" Background="{x:Null}" SelectionHighlightColor="{ThemeResource SystemControlHighlightAccentBrush}" InputScope="Number" PlaceholderText="Input time" TextAlignment="Left" TextChanged="InputBox_TextChanged"/>
+
+    </Grid>
+</Page>
