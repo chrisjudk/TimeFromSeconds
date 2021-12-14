@@ -4,9 +4,9 @@ using System.Threading;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace TimeFromSeconds
+namespace Controller
 {
-    class TimeFromSeconds
+    public class TFS
     {
         //Enumerations
 
@@ -106,7 +106,7 @@ namespace TimeFromSeconds
 
 
         //Constructors
-        public TimeFromSeconds(Unit aUnit, decimal aInput, bool aSubSecondOutput = false)
+        public TFS(Unit aUnit, decimal aInput, bool aSubSecondOutput = false)
         {
             TFSUnit = aUnit;
             Input = aInput;
@@ -117,6 +117,14 @@ namespace TimeFromSeconds
 
         //Methods
 
+        public TFS Set(Unit aUnit, decimal aInput, bool aSubSecondOutput = false)
+        {
+
+            TFSUnit = aUnit;
+            Input = aInput;
+            SubSecondOutput = aSubSecondOutput;
+            return this;
+        }
         //ToString() allows an object of the class to be called where a string input is expected (i.e. Console.WriteLine(aTFS);)
         public override string ToString()
         {

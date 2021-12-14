@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Controller;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -22,7 +23,10 @@ namespace TimeFromSeconds
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        private bool subSecBool = false;
+        private TFS aTFS = new TFS(TFS.Unit.Seconds, 0m,false);
         private decimal inputDec;
+        private TFS.Unit currentUnit = TFS.Unit.Millennia;
         public MainPage()
         {
             this.InitializeComponent();
@@ -30,56 +34,60 @@ namespace TimeFromSeconds
             Minutes.IsEnabled = false;
             Hours.IsEnabled = false;
             Days.IsEnabled = false;
-        }
+        }//MainPage()
 
         private void Seconds_Click(object sender, RoutedEventArgs e)
         {
+            currentUnit = TFS.Unit.Seconds;
             if (inputDec.Equals(decimal.Zero) || inputDec.Equals(null))
+            {
                 OutputBox.Text = "0";
+            }//fi
             else
             {
-                TimeFromSeconds aTFS = new TimeFromSeconds(TimeFromSeconds.Unit.Seconds, inputDec);
+                aTFS = aTFS.Set(currentUnit, inputDec, subSecBool);
                 OutputBox.Text = aTFS.ToString();
-            }
+            }//else
         }//Seconds_Click
 
         private void Minutes_Click(object sender, RoutedEventArgs e)
         {
+            currentUnit = TFS.Unit.Minutes;
             if (inputDec.Equals(decimal.Zero) || inputDec.Equals(null))
+            {
                 OutputBox.Text = "0";
+            }//fi
             else
             {
-                TimeFromSeconds aTFS = new TimeFromSeconds(TimeFromSeconds.Unit.Minutes, inputDec);
+                aTFS = aTFS.Set(currentUnit, inputDec, subSecBool);
                 OutputBox.Text = aTFS.ToString();
-            }
+            }//else
         }//Minutes_Click
 
         private void Hours_Click(object sender, RoutedEventArgs e)
         {
+            currentUnit = TFS.Unit.Hours;
             if (inputDec.Equals(decimal.Zero) || inputDec.Equals(null))
                 OutputBox.Text = "0";
             else
             {
-                TimeFromSeconds aTFS = new TimeFromSeconds(TimeFromSeconds.Unit.Hours, inputDec);
+                aTFS = aTFS.Set(currentUnit, inputDec, subSecBool);
                 OutputBox.Text = aTFS.ToString();
-            }
+            }//else
         }//Hours_Click
 
         private void Days_Click(object sender, RoutedEventArgs e)
         {
+            currentUnit = TFS.Unit.Days;
             if (inputDec.Equals(decimal.Zero) || inputDec.Equals(null))
                 OutputBox.Text = "0";
             else
             {
-                TimeFromSeconds aTFS = new TimeFromSeconds(TimeFromSeconds.Unit.Days, inputDec);
+                aTFS = aTFS.Set(currentUnit, inputDec, subSecBool);
                 OutputBox.Text = aTFS.ToString();
-            }
+            }//else
         }//Days_Click
 
-        private void InputBox_Click(object sender, RoutedEventArgs e)
-        {
-            InputBox.Text = string.Empty;
-        }//InputBox_click
         private void InputBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (Decimal.TryParse(InputBox.Text, out inputDec))
@@ -88,6 +96,11 @@ namespace TimeFromSeconds
                 Minutes.IsEnabled = true;
                 Hours.IsEnabled = true;
                 Days.IsEnabled = true;
+                if(currentUnit != TFS.Unit.Millennia)
+                {
+                    aTFS.Set(currentUnit, inputDec, subSecBool);
+                    OutputBox.Text = aTFS.ToString();
+                }//fi
             }//fi
             else
             {
@@ -97,5 +110,42 @@ namespace TimeFromSeconds
                 Days.IsEnabled = false;
             }//else
         }//InputBox_TextChanged()
+
+        private void SubSec_Toggled(object sender, RoutedEventArgs e)
+        {
+            if (sender is ToggleSwitch tog)
+            {
+                subSecBool = tog.IsOn;//else
+                switch (currentUnit)
+                {
+                    case TFS.Unit.Seconds:
+                        {
+                            Seconds_Click(sender, e);
+                            break;
+                        }//seconds
+
+                    case TFS.Unit.Minutes:
+                        {
+                            Minutes_Click(sender, e);
+                            break;
+                        }//minutes
+
+                    case TFS.Unit.Hours:
+                        {
+                            Hours_Click(sender, e);
+                            break;
+                        }//minutes
+
+                    case TFS.Unit.Days:
+                        {
+                            Days_Click(sender, e);
+                            break;
+                        }//days
+
+                    default:
+                        break;
+                }//switch
+            }//fi
+        }//SubSec_Toggled()
     }//MainPage
 }//namespace
