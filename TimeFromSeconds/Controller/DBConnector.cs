@@ -72,7 +72,7 @@ namespace Controller
                             {
                                 aInput = reader.GetDecimal(0);
                                 aUnit = (TFS.Unit)reader.GetInt32(1);
-                                aTime = reader.GetDateTime(2);
+                                aTime = reader.GetDateTime(2).ToLocalTime();
                                 outList.AddItem(new HistoryItem(aInput, aUnit, aTime));
                             }//while
                         }//reader
@@ -82,8 +82,37 @@ namespace Controller
             }//try
             catch(Exception e)
             {
-                throw new SQLiteException("Something went wrong while attempting to get history. Source: " + e.Source);
+                throw new SQLiteException($"Something went wrong while attempting to get history. Source: {e.Source}");
             }
-        }
+        }//GetHistoryList()
+        public static void Save(decimal aInput, TFS.Unit aUnit)
+        {
+            try
+            {
+                using (SQLiteConnection conn = new SQLiteConnection("Data Source=TFS.db;Version=3;"))
+                {
+                    conn.Open();
+                    using (SQLiteCommand cmd = new SQLiteCommand("INSERT INTO History(Input, Unit, Time) VALUES (@tv1, @tv2, @tv3)", conn))
+                    {
+                        if (!(aInput <= 0))
+                        {
+                            cmd.Parameters.AddWithValue("@tv1", aInput);
+                        }
+                        else
+                            throw new ArgumentOutOfRangeException($"Input cannot be less than or equal to zero. Input was {aInput}");
+                        cmd.Parameters.AddWithValue("@tv2", (int)aUnit);
+                        cmd.Parameters.AddWithValue("@tv3", DateTime.UtcNow);
+                        cmd.ExecuteNonQuery();
+                    }// using cmd
+                }//using conn
+            }//try
+            catch(Exception e)
+            {
+                if (e is ArgumentOutOfRangeException)
+                    throw new SQLiteException($"Attempted to store an invalid input value in database!\n    {e.Message}");
+                else
+                    throw new SQLiteException($"Something went wrong while attempting to store input in history! Source: {e.Source}");
+            }//catch
+        }//Save()
     }//DBConnector
 }//namespace
